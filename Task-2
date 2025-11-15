@@ -1,0 +1,107 @@
+ Bonus: Display Multiple Users
+• Fetch https://randomuser.me/api/?results=5
+• Display all users in a grid
+• Use CSS Flexbox or Grid for layout
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Multiple Users - Grid</title>
+
+  <style>
+    body {
+      background: #e9e9e9;
+      font-family: Arial;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      padding: 15px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+
+    img {
+      width: 100px;
+      border-radius: 50%;
+      margin-bottom: 10px;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Random 5 Users</h1>
+
+  <div class="grid" id="userGrid"></div>
+
+  <button onclick="loadUsers()">Load 5 New Users</button>
+
+  <script>
+    function loadUsers() {
+      fetch("https://randomuser.me/api/?results=5")
+        .then(res => res.json())
+        .then(data => {
+          let users = data.results;
+          let grid = document.getElementById("userGrid");
+          grid.innerHTML = ""; // Clear previous users
+
+          users.forEach(user => {
+            grid.innerHTML += `
+              <div class="card">
+                <img src="${user.picture.large}" />
+                <h3>${user.name.first} ${user.name.last}</h3>
+                <p>${user.email}</p>
+              </div>
+            `;
+          });
+        });
+    }
+
+    // Load first 5 automatically
+    loadUsers();
+  </script>
+
+</body>
+</html>
+
+Output:-
+
+Random 5 Users
+
+ ---------------------------------------------------------
+| (Photo) (Photo) (Photo) (Photo) |
+| Name 1 Name 2 Name 3 Name 4 |
+| email1 email2 email3 email4 |
+| |
+| (Photo) |
+| Name 5 |
+| email5 |
+ ---------------------------------------------------------
+
+                [ Load 5 New Users ]
